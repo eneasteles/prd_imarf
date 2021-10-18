@@ -1,0 +1,14 @@
+{% extends 'producao/modelo.html' %}
+
+{% load static %}
+
+{% block conteudo %}
+<ul>
+    <li>Soma:{{ sum.sum|floatformat:"2g" }}</li>
+    <li>Máximo:{{ max.max|floatformat:"2g" }} </li>
+    <li>Mínimo:{{ min.min|floatformat:"2g" }}</li>
+    <li>Média:{{ avg.avg|floatformat:"2g" }} </li>
+</ul>
+
+
+{% endblock %}

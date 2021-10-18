@@ -1,0 +1,97 @@
+{% extends 'producao/modelo.html' %}
+
+{% load static %}
+
+{% block conteudo %}
+<h1>Serradas</h1>
+<a href="{% url 'lista-serrada' %}" class="btn btn-primary btn-sm">Novo</a>
+<hr>
+<div class="table-responsive">
+    <table class="table table-striped" id="tabela-listar-serrada">
+    <thead>
+        <tr>
+            <th>Serrada</th>
+            <th>Início</th>
+            <th>Fim</th>
+            <th>Máquina</th>
+            <th>Hor. Inic</th>
+            <th>Hor. Final</th>
+            <th>Amp. Max.</th>
+            <th>Esp Fio Ini</th>
+            <th>Esp Fio Fin</th>
+            <th>Qt Fio</th>
+            <th>Periférica</th>
+            <th>Cala</th>
+            <th>Jogo Fio</th>
+            <th>Cons Kwh</th>
+            <th>Centro Custo</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for serrada in object_list %}
+        <tr>
+            <td>{{ serrada.serrada}}</td>
+            <td>{{ serrada.data_inicial}}</td>
+            <td>{{ serrada.data_final}}</td>
+            <td>{{ serrada.maquina}}</td>
+            <td>{{ serrada.horimetro_inicial}}</td>
+            <td>{{ serrada.horimetro_final}}</td>
+            <td>{{ serrada.amperagem_max}}</td>
+            <td>{{ serrada.espessura_fio_inicial}}</td>
+            <td>{{ serrada.espessura_fio_final}}</td>
+            <td>{{ serrada.qtde_fios}}</td>
+            <td>{{ serrada.periferica}}</td>
+            <td>{{ serrada.cala}}</td>
+            <td>{{ serrada.jogo_fio}}</td>
+            <td>{{ serrada.consumo_kwh}}</td>
+            <td>{{ serrada.centro_de_custo}}</td>
+        </tr>
+
+        {% empty %}
+        <tr>
+            <td colspan="4">Nenhum registro encontrado</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function(){
+        $("#tabela-listar-serrada").DataTable({
+        responsive: true,
+        // "bSort": false,
+        "aaSorting": [],
+        "pageLength": 50,
+        "language": {
+            "decimal": "",
+            "emptyTable": "Sem dados disponíveis",
+            "info": "Mostrando de _START_ até _END_ de _TOTAL_ registos",
+            "infoEmpty": "Mostrando de 0 até 0 de 0 registos",
+            "infoFiltered": "(filtrado de _MAX_ registos no total)",
+            "infoPostFix": "",
+            "thousands": ",",
+            "lengthMenu": "Mostrar _MENU_ registos",
+            "loadingRecords": "A carregar dados...",
+            "processing": "A processar...",
+            "search": "Procurar:",
+            "zeroRecords": "Não foram encontrados resultados",
+            "paginate": {
+                "first": "Primeiro",
+                "last": "Último",
+                "next": "Seguinte",
+                "previous": "Anterior"
+            },
+            "aria": {
+                "sortAscending": ": ordem crescente",
+                "sortDescending": ": ordem decrescente"
+            }
+        }
+    });
+    })
+</script>
+{% endblock %}

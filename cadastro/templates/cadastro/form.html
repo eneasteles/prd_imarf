@@ -1,0 +1,18 @@
+{% extends 'producao/modelo.html' %}
+
+{% load static %}
+
+{% block conteudo %}
+<h1>Cadastro de Blocos</h1>
+<p class="lead">
+    Preencha todos os campos obrigratórios
+</p>
+<hr>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p}}
+
+    <button type="submit" class="btn btn-success">Cadastrar</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,161 @@
+{% extends 'producao/modelo.html' %}
+
+{% load static %}
+
+{% block conteudo %}
+<h1>Serradas 2</h1>
+<a href="{% url 'lista-serrada2' %}" class="btn btn-primary btn-sm">Novo</a>
+<hr>
+<div class="table-responsive">
+    <table class="table table-striped" id="tabela-listar-serrada">
+    <thead>
+        <tr>
+            <th>Serrada</th>
+            <th>Ano</th>
+            <th>Mês</th>
+            <th>Máquina</th>
+            <th>Bloco</th>
+            <th>Material</th>
+            <th>m2</th>
+            <th>Qtde Ch</th>
+            <th>Espessura</th>
+            <th>Com</th>
+            <th>Alt</th>
+            <th>lar</th>
+            <th>m3 bru</th>
+            <th>m3 chp prod</th>
+            <th>m3 Perda Real</th>
+            <th>m3 Perda c/borda chp</th>
+            <th>m3 liq</th>            
+            <th>m3 Perda</th>
+            <th>Valor m3</th>
+            <th>Valor do Bloco</th>
+            <th>Custo do m2 com Borda</th>
+            <th>Custo do m2 sem Borda</th>
+            <th>Início</th>
+            <th>Fim</th>            
+            <th>Hor. Inic</th>
+            <th>Hor. Final</th>
+            <th>Amp. Max.</th>
+            <th>Jogo Fio</th>
+            <th>Qt Fio</th>
+            <th>Prd Fio m2</th>
+            <th>Custo Fio m2</th>
+            <th>Custo Fio m2 Aplicado</th>
+            <th>Esp Fio Ini</th>
+            <th>Esp Fio Fin</th>            
+            <th>Periférica</th>
+            <th>Cala</th>            
+            <th>Cons Kwh fp</th>
+            <th>Cons Kwh p</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for view_serrada in object_list %}
+        <tr>
+            <td>{{ view_serrada.serrada }}</td>
+            <td>{{ view_serrada.data_final| date:"Y" }}</td>  
+            <td>{{ view_serrada.data_final| date:"M" }}</td>
+            <td>{{ view_serrada.maquina }}</td>
+            <td>{{ view_serrada.bloco }}</td>
+            <td>{{ view_serrada.material }}</td>
+            <td>{{ view_serrada.m2 }}</td>
+            <td>{{ view_serrada.qtde_chapas }}</td>
+            <td>{{ view_serrada.espessura }}</td>
+            <td>{{ view_serrada.comprimento }}</td>
+            <td>{{ view_serrada.altura }}</td>
+            <td>{{ view_serrada.largura }}</td>
+            <td>{{ view_serrada.m3_bruto|floatformat:"2g"  }}</td>
+            <td>{{ view_serrada.m3_chapas_produzidas|floatformat:"2g"  }}</td>
+            <td>{{ view_serrada.m3_perda_real }}</td>
+            <td>{{ view_serrada.m3_perda_com_borda_chapa }}</td>  
+            <td>{{ view_serrada.m3_liquido }}</td>
+            <td>{{ view_serrada.m3_perda }}</td> 
+            <td>{{ view_serrada.valor_m3 }}</td>   
+            <td>{{ view_serrada.valor_do_bloco|floatformat:"2g" }}</td> 
+            <td>{{ view_serrada.custo_m2_com_borda|floatformat:"2g" }}</td>     
+            <td>{{ view_serrada.custo_m2_sem_borda|floatformat:"2g" }}</td>        
+            <td>{{ view_serrada.data_inicial| date:"d/m/Y" }}</td>
+            <td>{{ view_serrada.data_final| date:"d/m/Y" }}</td>
+            <td>{{ view_serrada.horimetro_inicial }}</td>
+            <td>{{ view_serrada.horimetro_final }}</td>
+            <td>{{ view_serrada.amperagem_max }}</td>
+            <td>{{ view_serrada.jogo_fio_id }}</td>
+            <td>{{ view_serrada.qtde_fios_aplicado }}</td>
+            <td>{{ view_serrada.prd_fio_m2 }}</td>
+            <td>{{ view_serrada.custo_fio_por_m2|floatformat:"2g" }}</td>
+            <td>{{ view_serrada.custo_fio_por_m2_aplicado|floatformat:"2g" }}</td>
+            <td>{{ view_serrada.espessura_fio_inicial }}</td>
+            <td>{{ view_serrada.espessura_fio_final }}</td>            
+            <td>{{ view_serrada.periferica }}</td>
+            <td>{{ view_serrada.cala }}</td>            
+            <td>{{ view_serrada.consumo_kwh_fp|floatformat:"2g"  }}</td>
+            <td>{{ view_serrada.consumo_kwh_p|floatformat:"2g"  }}</td>
+
+        </tr>
+        
+        {% empty %}
+        <tr>
+            <td colspan="4">Nenhum registro encontrado</td>
+        </tr>
+        {% endfor %}
+
+        
+    </tbody>
+    </table>
+    <table  class="table table-striped" id="tabela-listar-serrada-total">
+        <tbody>
+            <tr>                
+                <td>Total m2:</td> 
+                <td>{{m2.m2__sum|floatformat:"2g" }}</td> 
+                <td>Chapas:</td> 
+                <td>{{qtde_chapas.qtde_chapas__sum}}</td>
+                <td colspan="4"></td>
+                <td>Total m3 líquido:</td>
+                <td >{{m3_liquido.m3_liquido__sum|floatformat:"2g" }}</td>
+                <td>Perda Total m3:</td>
+                <td>{{m3_perda_com_borda_chapa.m3_perda_com_borda_chapa__sum|floatformat:"2g" }}</td>       
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function(){
+        $("#tabela-listar-serrada").DataTable({
+        responsive: true,
+        // "bSort": false,
+        "aaSorting": [],
+        "pageLength": 50,
+        "language": {
+            "decimal": "",
+            "emptyTable": "Sem dados disponíveis",
+            "info": "Mostrando de _START_ até _END_ de _TOTAL_ registos",
+            "infoEmpty": "Mostrando de 0 até 0 de 0 registos",
+            "infoFiltered": "(filtrado de _MAX_ registos no total)",
+            "infoPostFix": "",
+            "thousands": ",",
+            "lengthMenu": "Mostrar _MENU_ registos",
+            "loadingRecords": "A carregar dados...",
+            "processing": "A processar...",
+            "search": "Procurar:",
+            "zeroRecords": "Não foram encontrados resultados",
+            "paginate": {
+                "first": "Primeiro",
+                "last": "Último",
+                "next": "Seguinte",
+                "previous": "Anterior"
+            },
+            "aria": {
+                "sortAscending": ": ordem crescente",
+                "sortDescending": ": ordem decrescente"
+            }
+        }
+    });
+    })
+</script>
+{% endblock %}

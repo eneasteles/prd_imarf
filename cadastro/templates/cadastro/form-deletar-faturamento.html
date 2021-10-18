@@ -1,0 +1,19 @@
+{% extends 'producao/modelo.html' %}
+
+{% load static %}
+
+{% block conteudo %}
+<h1>Escluir Registro de Faturamento</h1>
+<p class="lead">
+    Tenha certeza do que vai fazer
+</p>
+<hr>
+<form action="" method="post">
+    <p>Deseja excluir o registro: {{ object }}</p>
+    {% csrf_token %}
+    {{ form.as_p}}
+
+    <button type="submit" class="btn btn-danger">Deletar</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'producao/modelo.html' %}
+
+{% load static %}
+
+{% block conteudo %}
+
+<hr>
+<div class="dt-body-center"><h1>Produção Fio Diamantado</h1></div>
+<div class="table-responsive">
+    
+    <table class="table table-striped" id="tabela-listar-serrada">
+    <thead>
+        <tr>            
+            <th>Máquina</th>
+            <th>Jogo Fio</th>
+            <th>Liga</th>
+            <th>Valor Metro $</th>
+            <th>Espes. Fio</th>
+            <th>m3 bru</th>
+            <th>m3 liq</th>
+            <th>m2</th>
+            <th>Prd Fio m2</th>
+            <th>Dureza</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for view_producao_fio in object_list %}
+        <tr>
+            <td>{{ view_producao_fio.maquina }}</td>
+            <td align="center">{{ view_producao_fio.jogo_fio_id }}</td>
+            <td align="center">{{ view_producao_fio.liga }}</td>
+            <td align="right">{{ view_producao_fio.valor_metro_fio|floatformat:"2g"  }}</td>
+            <td align="right">{{ view_producao_fio.espessura_fio|floatformat:"3g"  }}</td>
+            <td align="right">{{ view_producao_fio.m3_bruto|floatformat:"2g"  }}</td>
+            <td align="right">{{ view_producao_fio.m3_liquido|floatformat:"2g"  }}</td>
+            <td align="right">{{ view_producao_fio.m2|floatformat:"2g"  }}</td>            
+            <td align="right">{{ view_producao_fio.prd_fio_m2|floatformat:"2g"  }}</td>
+            <td align="center">{{ view_producao_fio.dureza }}</td>
+        </tr>
+
+        {% empty %}
+        <tr>
+            <td colspan="4">Nenhum registro encontrado</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function(){
+        $("#tabela-listar-serrada").DataTable({
+        responsive: true,
+        // "bSort": false,
+        "aaSorting": [],
+        "pageLength": 50,
+        "language": {
+            "decimal": "",
+            "emptyTable": "Sem dados disponíveis",
+            "info": "Mostrando de _START_ até _END_ de _TOTAL_ registos",
+            "infoEmpty": "Mostrando de 0 até 0 de 0 registos",
+            "infoFiltered": "(filtrado de _MAX_ registos no total)",
+            "infoPostFix": "",
+            "thousands": ",",
+            "lengthMenu": "Mostrar _MENU_ registos",
+            "loadingRecords": "A carregar dados...",
+            "processing": "A processar...",
+            "search": "Procurar:",
+            "zeroRecords": "Não foram encontrados resultados",
+            "paginate": {
+                "first": "Primeiro",
+                "last": "Último",
+                "next": "Seguinte",
+                "previous": "Anterior"
+            },
+            "aria": {
+                "sortAscending": ": ordem crescente",
+                "sortDescending": ": ordem decrescente"
+            }
+        }
+    });
+    })
+</script>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'producao/modelo.html' %}
+
+{% load static %}
+<div class="container">
+{% block conteudo %}
+
+<h3>Anual</h3>
+<hr>
+{{ anual | safe }}
+<hr>
+<h3>Mensal</h3>
+{{ faturamento_mensal | safe }}
+<h3>Por Empresa Anual</h3>
+<hr>
+{{ faturamento_empresa_anual | safe }}
+<hr>
+{% endblock %}
+
+</div>
